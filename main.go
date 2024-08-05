@@ -11,9 +11,9 @@ import (
 )
 
 func main() {
-	//Crea la app
+	// Crea la app
 	a := app.New()
-	//Crea la ventana y le pone el nombre de esta
+	// Crea la ventana y le pone el nombre de esta
 	w := a.NewWindow("Memory Game")
 
 	// Etiqueta para el titulo
@@ -24,15 +24,16 @@ func main() {
 
 	//Botones de Inicio
 	botonJugar := widget.NewButton("Jugar", func ()  {
-		//Pasar a la siguiente ventana
+		// Pasar a la siguiente ventana
 	})
 
 	botonIntrucciones := widget.NewButton("Intrucciones", func ()  {
-		//Mostrar las intrucciones
+		// Mostrar las intrucciones
+		ventIntruc(w)
 	})
 
 	botonSalir := widget.NewButton("Salir", func() {
-		//Cierra la aplicacion
+		// Cierra la aplicacion
 		a.Quit()
 	})
 
@@ -55,6 +56,41 @@ func main() {
 	// Define el tamaño de la ventana
 	w.Resize(fyne.NewSize(500, 500))
 
-	//Corre la aplicaion
+	// Corre la aplicaion
 	w.ShowAndRun()
+}
+
+// Funciones
+func ventIntruc (parent fyne.Window) {
+	// Titulo
+	tituloIntruc := canvas.NewText("Intrucciones", color.White)
+	tituloIntruc.Alignment = fyne.TextAlignCenter
+	tituloIntruc.TextSize = 24
+
+	// Intrucciones
+	contenido := widget.NewLabel("Aquí van las intrucciones.")
+	contenido.Wrapping = fyne.TextWrapWord
+
+	// Boton de cierre
+	botonCerrar := widget.NewButton("Salir", func() {
+		parent.Canvas().Overlays().Remove(parent.Canvas().Overlays().Top())
+	})
+	// Estilo del boton
+	botonCerrar.Importance = widget.DangerImportance
+
+
+	// Contenido de las intrucciones
+	contIntruc := container.NewVBox(
+		tituloIntruc,
+		contenido,
+		botonCerrar,
+	)
+
+	// Centra el contenido
+	intrucCentradas := container.NewCenter(contIntruc)
+	// Crea el canva o ventana popup
+	modal := widget.NewModalPopUp(intrucCentradas, parent.Canvas())
+	// Asigna el tamaño del canva
+	modal.Resize(fyne.NewSize(400, 300))
+	modal.Show()
 }
