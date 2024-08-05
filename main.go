@@ -1,13 +1,8 @@
 package main
 
 import (
-	"image/color"
-
-	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
+	"myApp/views"
 )
 
 func main() {
@@ -16,81 +11,9 @@ func main() {
 	// Crea la ventana y le pone el nombre de esta
 	w := a.NewWindow("Memory Game")
 
-	// Etiqueta para el titulo
-	titulo := canvas.NewText("Memory Game", color.White)
-	titulo.Alignment = fyne.TextAlignCenter
-	titulo.TextSize = 24
-
-
-	//Botones de Inicio
-	botonJugar := widget.NewButton("Jugar", func ()  {
-		// Pasar a la siguiente ventana
-	})
-
-	botonIntrucciones := widget.NewButton("Intrucciones", func ()  {
-		// Mostrar las intrucciones
-		ventIntruc(w)
-	})
-
-	botonSalir := widget.NewButton("Salir", func() {
-		// Cierra la aplicacion
-		a.Quit()
-	})
-
-	// Estilo de los botones
-	botonJugar.Importance = widget.HighImportance
-	botonIntrucciones.Importance = widget.HighImportance
-	botonSalir.Importance = widget.DangerImportance
-
-	// Contenedor
-	content := container.NewVBox(
-		titulo,
-		container.NewVBox(botonJugar, botonIntrucciones),
-		botonSalir,
-	)
-
-	// Centra el contenido
-	contentCenter := container.NewCenter(content)
-	// Agrega el contenido a la ventana
-	w.SetContent(contentCenter)
-	// Define el tamaño de la ventana
-	w.Resize(fyne.NewSize(500, 500))
+	// Inicializa la interfaz principal
+	views.MainMenu(w)
 
 	// Corre la aplicaion
 	w.ShowAndRun()
-}
-
-// Funciones
-func ventIntruc (parent fyne.Window) {
-	// Titulo
-	tituloIntruc := canvas.NewText("Intrucciones", color.White)
-	tituloIntruc.Alignment = fyne.TextAlignCenter
-	tituloIntruc.TextSize = 24
-
-	// Intrucciones
-	contenido := widget.NewLabel("Aquí van las intrucciones.")
-	contenido.Wrapping = fyne.TextWrapWord
-
-	// Boton de cierre
-	botonCerrar := widget.NewButton("Salir", func() {
-		parent.Canvas().Overlays().Remove(parent.Canvas().Overlays().Top())
-	})
-	// Estilo del boton
-	botonCerrar.Importance = widget.DangerImportance
-
-
-	// Contenido de las intrucciones
-	contIntruc := container.NewVBox(
-		tituloIntruc,
-		contenido,
-		botonCerrar,
-	)
-
-	// Centra el contenido
-	intrucCentradas := container.NewCenter(contIntruc)
-	// Crea el canva o ventana popup
-	modal := widget.NewModalPopUp(intrucCentradas, parent.Canvas())
-	// Asigna el tamaño del canva
-	modal.Resize(fyne.NewSize(400, 300))
-	modal.Show()
 }
