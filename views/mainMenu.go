@@ -84,7 +84,7 @@ func ventIntruc(parent fyne.Window) {
 	modal.Show()
 }
 
-func win(parent fyne.Window) {
+/*func win(parent fyne.Window) {
 	// Ganador
 	ganador := canvas.NewText("Ganador", color.RGBA{R: 0, G: 255, B: 0, A: 255})
 	ganador.Alignment = fyne.TextAlignCenter
@@ -124,4 +124,4 @@ func win(parent fyne.Window) {
 	// Asigna el tamaño del canva
 	modal.Resize(fyne.NewSize(400, 300))
 	modal.Show()
-}
+}*/

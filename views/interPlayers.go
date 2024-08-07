@@ -17,10 +17,11 @@ func InterPlayers(w fyne.Window) {
 	// Botones de modos de juego
 	botonUnJugador := widget.NewButton("1 Jugador", func() {
 		// Acción para 1 jugador
-		NumberCards(w)
+		NumberCards(w, 1)
 	})
 	botonDosJugadores := widget.NewButton("2 Jugadores", func() {
 		// Acción para 2 jugadores
+		NumberCards(w, 2)
 	})
 	botonVolver := widget.NewButton("Volver", func() {
 		// Volver a la ventana anterior

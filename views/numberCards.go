@@ -9,7 +9,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func NumberCards(w fyne.Window) {
+func NumberCards(w fyne.Window,  players int) {
 	// Titulo
 	titulo := canvas.NewText("Cantidad De Cartas", color.White)
 	titulo.Alignment = fyne.TextAlignCenter
@@ -17,20 +17,24 @@ func NumberCards(w fyne.Window) {
 
 	boton8Cartas := widget.NewButton ("8 Cartas", func ()  {
 		// Interfaz con 8 cartas
-		EightCards(w)
+		//EightCards(w)
+		startGame(w, players, 8)
 	})
 
 	boton12Cartas := widget.NewButton ("12 Cartas", func ()  {
 		// Interfaz con 12 cartas
-		TwelveCards(w)
+		//TwelveCards(w)
+		startGame(w, players, 12)
 	})
 	boton16Cartas := widget.NewButton ("16 Cartas", func ()  {
 		// Interfaz con 16 cartas
-		SixteenCards(w)
+		//SixteenCards(w)
+		startGame(w, players, 16)
 	})
 	boton20Cartas := widget.NewButton ("20 Cartas", func ()  {
 		// Interfaz con 20 cartas
-		TwentyCards(w)
+		//TwentyCards(w)
+		startGame(w, players, 20)
 	})
 	botonVolver := widget.NewButton ("Volver", func ()  {
 		// Volver a InterPlayers
