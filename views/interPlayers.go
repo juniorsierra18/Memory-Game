@@ -2,6 +2,8 @@ package views
 
 import (
 	"image/color"
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
@@ -17,14 +19,17 @@ func InterPlayers(w fyne.Window) {
 	// Botones de modos de juego
 	botonUnJugador := widget.NewButton("1 Jugador", func() {
 		// Acción para 1 jugador
+		time.Sleep((500) * time.Millisecond)
 		NumberCards(w, 1)
 	})
 	botonDosJugadores := widget.NewButton("2 Jugadores", func() {
 		// Acción para 2 jugadores
+		time.Sleep((500) * time.Millisecond)
 		NumberCards(w, 2)
 	})
 	botonVolver := widget.NewButton("Volver", func() {
 		// Volver a la ventana anterior
+		time.Sleep((500) * time.Millisecond)
 		MainMenu(w)
 	})
 

@@ -57,11 +57,15 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 
 		if len(flippedCards) == 2 {
 			if checkMatch(flippedCards[0], flippedCards[1]) {
+				// Las cartas coinciden, deshabilitarlas
+				time.Sleep((300) * time.Millisecond)
 				flippedCards[0].button.Disable()
+				time.Sleep((400) * time.Millisecond)
 				flippedCards[1].button.Disable()
 			} else {
+				// Las cartas no coinciden, esperar antes de voltearlas de nuevo
 				go func(cardsToFlip []*card) {
-					time.Sleep(1 * time.Second)
+					time.Sleep((1300) * time.Millisecond) //Tiempo de espera para voltear carta
 					for _, card := range cardsToFlip {
 						card.flip()
 					}
@@ -85,6 +89,7 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 	poinsContainer := container.NewVBox(poinsPlayer1, poinsPlayer2)
 
 	botonVolver := widget.NewButton("Volver", func() {
+		time.Sleep((500) * time.Millisecond)
 		NumberCards(w, players) // Reiniciar el juego
 	})
 
