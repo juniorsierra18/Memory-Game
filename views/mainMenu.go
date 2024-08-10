@@ -92,7 +92,7 @@ func ventIntruc(parent fyne.Window) {
 	// Nombre del ganador
 	contenidoG := widget.NewLabel("Jugador 1")
 	contenidoG.Wrapping = fyne.TextWrapWord
-	
+
 	// Perdedor
 	perdedor := canvas.NewText("Perdedor", color.RGBA{R: 255, G: 0, B: 0, A: 255})
 	perdedor.Alignment = fyne.TextAlignCenter

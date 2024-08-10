@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fyne.io/fyne/v2/app"
 	"myApp/views"
+
+	"fyne.io/fyne/v2/app"
 )
 
 func main() {
