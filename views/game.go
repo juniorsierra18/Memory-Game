@@ -8,6 +8,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -39,10 +40,13 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 	// Mezclar las cartas
 	rand.Shuffle(len(cards), func(i, j int) { cards[i], cards[j] = cards[j], cards[i] })
 
+	bg := canvas.NewRectangle(color.Black)
+	bg.Resize(fyne.NewSize(500, 500))
+
 	// Etiqueta para el titulo
 	titulo := canvas.NewText("Memory Game", color.White)
 	titulo.Alignment = fyne.TextAlignCenter
-	titulo.TextSize = 24
+	titulo.TextSize = 50
 
 	//cardButtons = make([]*widget.Button, numDeCards)
 	cardContainer := container.NewGridWithColumns(4)
@@ -95,10 +99,15 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 
 	botonVolver.Importance = widget.DangerImportance
 
-	w.SetContent(container.NewVBox(
+	content := container.NewVBox(
 		titulo,
 		cardContainer,
 		poinsContainer,
 		botonVolver,
-	))
+	)
+
+	// Centra el contenido
+	contentCenter := container.New(layout.NewStackLayout(), bg, container.NewCenter(content))
+	// Agrega el contenido a la ventana
+	w.SetContent(contentCenter)
 }

@@ -7,14 +7,17 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
 func InterPlayers(w fyne.Window) {
+	bg := canvas.NewRectangle(color.Black)
+	bg.Resize(fyne.NewSize(500, 500))
 	// Titulo
 	titulo := canvas.NewText("Seleccione el modo de juego", color.White)
 	titulo.Alignment = fyne.TextAlignCenter
-	titulo.TextSize = 24
+	titulo.TextSize = 40
 
 	// Botones de modos de juego
 	botonUnJugador := widget.NewButton("1 Jugador", func() {
@@ -47,7 +50,7 @@ func InterPlayers(w fyne.Window) {
 	)
 
 	// Centra el contenido
-	contentCenter := container.NewCenter(content)
+	contentCenter := container.New(layout.NewStackLayout(), bg, container.NewCenter(content))
 	// Agrega el contenido a la ventana
 	w.SetContent(contentCenter)
 }

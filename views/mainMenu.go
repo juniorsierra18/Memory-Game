@@ -3,6 +3,7 @@ package views
 import (
 	"image/color"
 
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
@@ -10,10 +11,13 @@ import (
 )
 
 func MainMenu(w fyne.Window) {
+	bg := canvas.NewRectangle(color.Black)
+	bg.Resize(fyne.NewSize(500, 500))
+	
 	// Etiqueta para el titulo
 	titulo := canvas.NewText("Memory Game", color.White)
 	titulo.Alignment = fyne.TextAlignCenter
-	titulo.TextSize = 24
+	titulo.TextSize = 40
 
 	// Botones de Inicio
 	botonJugar := widget.NewButton("Jugar", func() {
@@ -44,7 +48,7 @@ func MainMenu(w fyne.Window) {
 	)
 
 	// Centra el contenido
-	contentCenter := container.NewCenter(content)
+	contentCenter := container.New(layout.NewStackLayout(), bg, container.NewCenter(content))
 	// Agrega el contenido a la ventana
 	w.SetContent(contentCenter)
 	// Define el tamaño de la ventana
@@ -55,7 +59,7 @@ func ventIntruc(parent fyne.Window) {
 	// Titulo
 	tituloIntruc := canvas.NewText("Intrucciones", color.White)
 	tituloIntruc.Alignment = fyne.TextAlignCenter
-	tituloIntruc.TextSize = 24
+	tituloIntruc.TextSize = 40
 
 	// Intrucciones
 	contenido := widget.NewLabel("Aquí van las intrucciones.")

@@ -6,14 +6,17 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
 func NumberCards(w fyne.Window, players int) {
+	bg := canvas.NewRectangle(color.Black)
+	bg.Resize(fyne.NewSize(500, 500))
 	// Titulo
 	titulo := canvas.NewText("Cantidad De Cartas", color.White)
 	titulo.Alignment = fyne.TextAlignCenter
-	titulo.TextSize = 24
+	titulo.TextSize = 40
 
 	boton8Cartas := widget.NewButton("8 Cartas", func() {
 		// Interfaz con 8 cartas
@@ -64,7 +67,7 @@ func NumberCards(w fyne.Window, players int) {
 	)
 
 	// Centra el contenido
-	contentCenter := container.NewCenter(content)
+	contentCenter := container.New(layout.NewStackLayout(), bg, container.NewCenter(content))
 	// Agrega el contenido a la ventana
 	w.SetContent(contentCenter)
 }
