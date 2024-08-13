@@ -56,7 +56,7 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 		}
 
 		if len(flippedCards) == 2 {
-			if checkMatch(flippedCards[0], flippedCards[1]) {
+			if checkMatch(flippedCards[0], flippedCards[1]) && flippedCards[0] != flippedCards[1] {
 				// Las cartas coinciden, deshabilitarlas
 				time.Sleep((300) * time.Millisecond)
 				flippedCards[0].button.Disable()
