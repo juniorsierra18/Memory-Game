@@ -1,6 +1,7 @@
 package views
 
 import (
+	"fmt"
 	"image/color"
 	"math/rand"
 	"time"
@@ -15,15 +16,19 @@ import (
 var (
 	players      int
 	numDeCards   int
+	turno 		 int
+	textoTurno   *widget.Label
 	cardButtons  []*widget.Button
 	poinsPlayer1 *widget.Label
 	poinsPlayer2 *widget.Label
 	cards        []*card
 )
 
+//Inicia el Juego
 func startGame(w fyne.Window, numPlayers, numCards int) {
 	players = numPlayers
 	numDeCards = numCards
+	turno = 1
 
 	// Reiniciar el estado global del juego
 	cards = nil
@@ -83,6 +88,8 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 						card.flip()
 					}
 					flippedCards = nil // Restablecer la lista de cartas volteadas
+					manejoDeTurnos(players)
+					fmt.Println("Jugador: ", turno)
 				}(flippedCards)
 			}
 		}
@@ -95,6 +102,8 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 		}
 		cardContainer.Add(card.button)
 	}
+	
+	textoTurno = widget.NewLabel("Turno del Jugador 1")
 
 	poinsPlayer1 = widget.NewLabel("Puntuacion Jugador 1: 0")
 	poinsPlayer2 = widget.NewLabel("Puntuacion Jugador 2: 0")
@@ -109,6 +118,7 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 	botonVolver.Importance = widget.DangerImportance
 
 	content := container.NewVBox(
+		textoTurno,
 		titulo,
 		cardContainer,
 		poinsContainer,
@@ -119,4 +129,17 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 	contentCenter := container.New(layout.NewStackLayout(), bg, container.NewCenter(content))
 	// Agrega el contenido a la ventana
 	w.SetContent(contentCenter)
+}
+
+func manejoDeTurnos(numPlayers int) {
+	if numPlayers == 2 {
+		if turno == 1 {
+			turno = 2
+			textoTurno.SetText("Turno del Jugador 2")
+		} else {
+			turno = 1
+			textoTurno.SetText("Turno del Jugador 1")
+		}
+	}
+
 }
