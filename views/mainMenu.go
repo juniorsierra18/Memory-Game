@@ -3,17 +3,17 @@ package views
 import (
 	"image/color"
 
-	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
 func MainMenu(w fyne.Window) {
 	bg := canvas.NewRectangle(color.Black)
 	bg.Resize(fyne.NewSize(500, 500))
-	
+
 	// Etiqueta para el titulo
 	titulo := canvas.NewText("Memory Game", color.White)
 	titulo.Alignment = fyne.TextAlignCenter
@@ -57,34 +57,76 @@ func MainMenu(w fyne.Window) {
 
 func ventIntruc(parent fyne.Window) {
 	// Titulo
-	tituloIntruc := canvas.NewText("Intrucciones", color.White)
+	tituloIntruc := canvas.NewText("Instrucciones", color.White)
 	tituloIntruc.Alignment = fyne.TextAlignCenter
 	tituloIntruc.TextSize = 40
 
-	// Intrucciones
-	contenido := widget.NewLabel("Aquí van las intrucciones.")
+	// Instrucciones
+	contenido := widget.NewLabel(`
+INTRODUCCIÓN:
+Este es un juego de memoria en el que los jugadores deben encontrar pares de cartas iguales. El juego ofrece diferentes configuraciones de dificultad, con varias cantidades de cartas disponibles. Se puede jugar solo o con un amigo.
+
+1. Menú Principal:
+   - Jugar: Inicia el juego seleccionando el número de jugadores.
+   - Instrucciones: Muestra las instrucciones del juego.
+   - Salir: Cierra la aplicación.
+
+SELECCIÓN DEL NÚMERO DE JUGADORES:
+1. Un Jugador: Selecciona esta opción para jugar solo.
+2. Dos Jugadores: Selecciona esta opción para jugar contra otro jugador.
+
+SELECCIÓN DE LA CANTIDAD DE CARTAS:
+Después de seleccionar el número de jugadores, elige la cantidad de cartas con las que deseas jugar:
+- 8 Cartas
+- 12 Cartas
+- 16 Cartas
+- 20 Cartas
+
+OBJETIVO DEL JUEGO:
+El objetivo es encontrar todos los pares de cartas iguales. En cada turno, un jugador selecciona dos cartas para voltearlas. Si las cartas coinciden, permanecen volteadas, y el jugador suma puntos. Si no coinciden, se voltean de nuevo, y el turno pasa al siguiente jugador (si hay dos jugadores).
+
+REGLAS DEL JUEGO:
+1. Volteo de Cartas:
+   - Selecciona una carta para voltearla. Su valor será revelado.
+   - Selecciona una segunda carta. Si ambas cartas coinciden, permanecerán volteadas. Si no coinciden, ambas se voltearán de nuevo.
+2. Cambio de Turno:
+   - En un juego de dos jugadores, el turno cambia automáticamente después de cada intento fallido. Si un jugador encuentra un par, puede seguir jugando.
+3. Puntuación:
+   - Jugador 1: Su puntuación se muestra en la parte inferior de la pantalla.
+   - Jugador 2: Si se juega en modo de dos jugadores, su puntuación también se mostrará.
+4. Volver al Menú: Durante el juego, puedes volver al menú principal presionando el botón "Volver".
+
+FIN DEL JUEGO:
+El juego termina cuando todos los pares han sido encontrados. El jugador con más puntos gana (en el caso de dos jugadores). Si juegas solo, tu objetivo es encontrar todos los pares en el menor tiempo posible.
+
+CONTROLES:
+- Ratón: Utiliza el ratón para hacer clic en los botones y seleccionar cartas.
+- Salir: Puedes salir del juego en cualquier momento utilizando el botón "Salir" en el menú principal o la ventana de instrucciones.
+`)
 	contenido.Wrapping = fyne.TextWrapWord
 
-	// Boton de cierre
+	// Crea un contenedor de desplazamiento para las instrucciones
+	scrollCont := container.NewScroll(contenido)
+	scrollCont.SetMinSize(fyne.NewSize(600, 400)) // Ajusta el tamaño del contenedor de desplazamiento
+
+	// Botón de cierre
 	botonCerrar := widget.NewButton("Salir", func() {
 		parent.Canvas().Overlays().Remove(parent.Canvas().Overlays().Top())
 	})
-	// Estilo del boton
 	botonCerrar.Importance = widget.DangerImportance
 
-	// Contenido de las intrucciones
+	// Contenido de las instrucciones con desplazamiento
 	contIntruc := container.NewVBox(
 		tituloIntruc,
-		contenido,
+		scrollCont,
 		botonCerrar,
 	)
 
 	// Centra el contenido
 	intrucCentradas := container.NewCenter(contIntruc)
-	// Crea el canva o ventana popup
+	// Crea la ventana popup
 	modal := widget.NewModalPopUp(intrucCentradas, parent.Canvas())
-	// Asigna el tamaño del canva
-	modal.Resize(fyne.NewSize(400, 300))
+	modal.Resize(fyne.NewSize(700, 500)) // Ajusta el tamaño de la ventana emergente
 	modal.Show()
 }
 

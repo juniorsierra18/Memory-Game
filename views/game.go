@@ -82,18 +82,18 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 				time.Sleep(400 * time.Millisecond)
 				flippedCards[1].button.Disable()
 				flippedCards = nil
-				
+
 				if turno == 1 {
 					pointsPlayer1++
-					marcador := fmt.Sprintf("Puntuación jugador 1: %d",pointsPlayer1)
+					marcador := fmt.Sprintf("Puntuación jugador 1: %d", pointsPlayer1)
 					marcadorPlayer1.SetText(marcador)
 				}
 				if turno == 2 {
 					pointsPlayer2++
-					marcador := fmt.Sprintf("Puntuación jugador 2: %d",pointsPlayer2)
+					marcador := fmt.Sprintf("Puntuación jugador 2: %d", pointsPlayer2)
 					marcadorPlayer2.SetText(marcador)
 				}
-				
+
 			} else {
 				// Las cartas no coinciden, esperar antes de voltearlas de nuevo
 				go func(cardsToFlip []*card) {
