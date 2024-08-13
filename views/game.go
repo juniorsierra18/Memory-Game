@@ -54,28 +54,37 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 	var flippedCards []*card
 
 	flipFunc := func(c *card) {
-		if len(flippedCards) < 2 {
+		if len(flippedCards) == 0 {
 			c.flip()
 			flippedCards = append(flippedCards, c)
-		}
+		} else if len(flippedCards) == 1 {
+			// Verificar que la carta no sea la misma que la primera
+			if flippedCards[0] == c {
+				// Si es la misma carta, no hacer nada
+				return
+			}
 
-		if len(flippedCards) == 2 {
-			if checkMatch(flippedCards[0], flippedCards[1]) && flippedCards[0] != flippedCards[1] {
+			c.flip()
+			flippedCards = append(flippedCards, c)
+
+			// Verificar si las dos cartas coinciden
+			if checkMatch(flippedCards[0], flippedCards[1]) {
 				// Las cartas coinciden, deshabilitarlas
-				time.Sleep((300) * time.Millisecond)
+				time.Sleep(300 * time.Millisecond)
 				flippedCards[0].button.Disable()
-				time.Sleep((400) * time.Millisecond)
+				time.Sleep(400 * time.Millisecond)
 				flippedCards[1].button.Disable()
+				flippedCards = nil
 			} else {
 				// Las cartas no coinciden, esperar antes de voltearlas de nuevo
 				go func(cardsToFlip []*card) {
-					time.Sleep((1300) * time.Millisecond) //Tiempo de espera para voltear carta
+					time.Sleep(500 * time.Millisecond) // Espera 0.5 segundos antes de voltear las cartas
 					for _, card := range cardsToFlip {
 						card.flip()
 					}
+					flippedCards = nil // Restablecer la lista de cartas volteadas
 				}(flippedCards)
 			}
-			flippedCards = nil
 		}
 	}
 
