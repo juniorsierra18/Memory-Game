@@ -14,21 +14,23 @@ import (
 )
 
 var (
-	players      int
-	numDeCards   int
-	turno 		 int
-	textoTurno   *widget.Label
-	cardButtons  []*widget.Button
-	poinsPlayer1 *widget.Label
-	poinsPlayer2 *widget.Label
-	cards        []*card
+	players         int
+	numDeCards      int
+	turno           int
+	textoTurno      *widget.Label
+	cardButtons     []*widget.Button
+	marcadorPlayer1 *widget.Label
+	marcadorPlayer2 *widget.Label
+	cards           []*card
 )
 
-//Inicia el Juego
+// Inicia el Juego
 func startGame(w fyne.Window, numPlayers, numCards int) {
 	players = numPlayers
 	numDeCards = numCards
 	turno = 1
+	var pointsPlayer1 = 0
+	var pointsPlayer2 = 0
 
 	// Reiniciar el estado global del juego
 	cards = nil
@@ -80,6 +82,18 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 				time.Sleep(400 * time.Millisecond)
 				flippedCards[1].button.Disable()
 				flippedCards = nil
+				
+				if turno == 1 {
+					pointsPlayer1++
+					marcador := fmt.Sprintf("Puntuación jugador 1: %d",pointsPlayer1)
+					marcadorPlayer1.SetText(marcador)
+				}
+				if turno == 2 {
+					pointsPlayer2++
+					marcador := fmt.Sprintf("Puntuación jugador 2: %d",pointsPlayer2)
+					marcadorPlayer2.SetText(marcador)
+				}
+				
 			} else {
 				// Las cartas no coinciden, esperar antes de voltearlas de nuevo
 				go func(cardsToFlip []*card) {
@@ -88,6 +102,7 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 						card.flip()
 					}
 					flippedCards = nil // Restablecer la lista de cartas volteadas
+
 					manejoDeTurnos(players)
 					fmt.Println("Jugador: ", turno)
 				}(flippedCards)
@@ -102,13 +117,13 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 		}
 		cardContainer.Add(card.button)
 	}
-	
+
 	textoTurno = widget.NewLabel("Turno del Jugador 1")
 
-	poinsPlayer1 = widget.NewLabel("Puntuacion Jugador 1: 0")
-	poinsPlayer2 = widget.NewLabel("Puntuacion Jugador 2: 0")
+	marcadorPlayer1 = widget.NewLabel("Puntuacion Jugador 1: 0")
+	marcadorPlayer2 = widget.NewLabel("Puntuacion Jugador 2: 0")
 
-	poinsContainer := container.NewVBox(poinsPlayer1, poinsPlayer2)
+	poinsContainer := container.NewVBox(marcadorPlayer1, marcadorPlayer2)
 
 	botonVolver := widget.NewButton("Volver", func() {
 		time.Sleep((500) * time.Millisecond)
