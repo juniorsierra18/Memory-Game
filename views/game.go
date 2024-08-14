@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"math/rand"
+	"strconv"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -104,7 +105,7 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 					flippedCards = nil // Restablecer la lista de cartas volteadas
 
 					manejoDeTurnos(players)
-					fmt.Println("Jugador: ", turno)
+					//fmt.Println("Jugador: ", turno)
 				}(flippedCards)
 			}
 		}
@@ -156,5 +157,41 @@ func manejoDeTurnos(numPlayers int) {
 			textoTurno.SetText("Turno del Jugador 1")
 		}
 	}
+
+}
+
+func finGame (w fyne.Window, numPlayers, pointsPlayer1, pointsPlayer2 int) {
+	bg := canvas.NewRectangle(color.Black)
+	bg.Resize(fyne.NewSize(500, 500))
+
+	// Etiqueta para el titulo
+	titulo := canvas.NewText("Memory Game", color.White)
+	titulo.Alignment = fyne.TextAlignCenter
+	titulo.TextSize = 50
+
+	resultado := "Juego terminado\n"
+
+	if numPlayers == 1 {
+		resultado += "Puntuacion final: " + strconv.Itoa(pointsPlayer1)
+	} else	{
+		resultado := "Puntuacion Jugador 1: " + strconv. Itoa(pointsPlayer1) + "\n"
+		resultado += "Puntuacion Jugador 2: " + strconv. Itoa(pointsPlayer2) + "\n"
+		if pointsPlayer1 > pointsPlayer2 {
+			resultado += "Gana El Jugador 1🥳"
+		} else if pointsPlayer1 < pointsPlayer2 {
+			resultado += "Gana El Jugador 2🥳"
+		} else {
+			resultado += "Es Un Empate"
+		}
+	}
+
+	// Mostrar la pantalla de resultados
+	w.SetContent(container.NewVBox(
+		widget.NewLabel(resultado), // Etiqueta con los resultados del juego
+		widget.NewButton("Volver a jugar", func() {
+			// Volver a la pantalla de selección de jugadores o reiniciar el juego
+			InterPlayers(w)
+		}),
+	))
 
 }
