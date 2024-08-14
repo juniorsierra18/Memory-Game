@@ -1,5 +1,15 @@
 package main
 
+//Querido colega programador:
+//Cuando escribí este código, sólo Dios y yo
+//sabíamos cómo funcionaba.
+//Ahora, sólo Dios lo sabe!
+//Así que si está tratando de 'optimizarlo'
+//y fracasa (seguramente), por favor,
+//incremente el contador a continuación
+//como una advertencia para su siguiente colega:
+//total_horas_perdidas_aquí = 10
+
 import (
 	"myApp/views"
 

@@ -186,7 +186,7 @@ func finGame(w fyne.Window, numPlayers, pointsPlayer1, pointsPlayer2 int) {
 	if numPlayers == 1 {
 		resultado += "Puntuacion final: " + strconv.Itoa(pointsPlayer1)
 	} else {
-		resultado := "Puntuacion Jugador 1: " + strconv.Itoa(pointsPlayer1) + "\n"
+		resultado += "Puntuacion Jugador 1: " + strconv.Itoa(pointsPlayer1) + "\n"
 		resultado += "Puntuacion Jugador 2: " + strconv.Itoa(pointsPlayer2) + "\n"
 		if pointsPlayer1 > pointsPlayer2 {
 			resultado += "Gana El Jugador 1🥳"
@@ -201,6 +201,7 @@ func finGame(w fyne.Window, numPlayers, pointsPlayer1, pointsPlayer2 int) {
 	w.SetContent(
 		container.NewCenter(
 			container.NewVBox(
+				titulo,
 				widget.NewLabel(resultado), // Etiqueta con los resultados del juego
 				widget.NewButton("Volver a jugar", func() {
 					// Volver a la pantalla de selección de jugadores o reiniciar el juego
