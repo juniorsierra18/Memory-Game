@@ -94,7 +94,19 @@ func startGame(w fyne.Window, numPlayers, numCards int) {
 					marcador := fmt.Sprintf("Puntuación jugador 2: %d", pointsPlayer2)
 					marcadorPlayer2.SetText(marcador)
 				}
+				// Verificar si el juego ha terminado
+				allMatched := true
+				for _, card := range cards {
+					if !card.button.Disabled() {
+						allMatched = false
+						break
+					}
+				}
 
+				if allMatched {
+					finGame(w, players, pointsPlayer1, pointsPlayer2)
+					return
+				}
 			} else {
 				// Las cartas no coinciden, esperar antes de voltearlas de nuevo
 				go func(cardsToFlip []*card) {
@@ -160,7 +172,7 @@ func manejoDeTurnos(numPlayers int) {
 
 }
 
-func finGame (w fyne.Window, numPlayers, pointsPlayer1, pointsPlayer2 int) {
+func finGame(w fyne.Window, numPlayers, pointsPlayer1, pointsPlayer2 int) {
 	bg := canvas.NewRectangle(color.Black)
 	bg.Resize(fyne.NewSize(500, 500))
 
@@ -173,9 +185,9 @@ func finGame (w fyne.Window, numPlayers, pointsPlayer1, pointsPlayer2 int) {
 
 	if numPlayers == 1 {
 		resultado += "Puntuacion final: " + strconv.Itoa(pointsPlayer1)
-	} else	{
-		resultado := "Puntuacion Jugador 1: " + strconv. Itoa(pointsPlayer1) + "\n"
-		resultado += "Puntuacion Jugador 2: " + strconv. Itoa(pointsPlayer2) + "\n"
+	} else {
+		resultado := "Puntuacion Jugador 1: " + strconv.Itoa(pointsPlayer1) + "\n"
+		resultado += "Puntuacion Jugador 2: " + strconv.Itoa(pointsPlayer2) + "\n"
 		if pointsPlayer1 > pointsPlayer2 {
 			resultado += "Gana El Jugador 1🥳"
 		} else if pointsPlayer1 < pointsPlayer2 {
@@ -186,12 +198,16 @@ func finGame (w fyne.Window, numPlayers, pointsPlayer1, pointsPlayer2 int) {
 	}
 
 	// Mostrar la pantalla de resultados
-	w.SetContent(container.NewVBox(
-		widget.NewLabel(resultado), // Etiqueta con los resultados del juego
-		widget.NewButton("Volver a jugar", func() {
-			// Volver a la pantalla de selección de jugadores o reiniciar el juego
-			InterPlayers(w)
-		}),
-	))
+	w.SetContent(
+		container.NewCenter(
+			container.NewVBox(
+				widget.NewLabel(resultado), // Etiqueta con los resultados del juego
+				widget.NewButton("Volver a jugar", func() {
+					// Volver a la pantalla de selección de jugadores o reiniciar el juego
+					InterPlayers(w)
+				}),
+			),
+		),
+	)
 
 }
